@@ -29,18 +29,21 @@ public class FCVendorTest {
     public static String ID;
     public static String ConfigURL;
     public static String OrderID;
+    public static String Weight;
+    public static String BagSize;
     public static void main(String[] args){
         //InputCache();
         Input();
-        SetBrowserDriver();
-        Login();
+        CheckDatabase();
+        //SetBrowserDriver();
+        //Login();
         //CookieSave();
-        CookieLoad();
-        Login();
+        //CookieLoad();
+        //Login();
         //intermed("http://vendor.firstcry.com/dashboard.aspx", browser);
-        openConfig(OrderID);
-        detectFormType();
-        looper();
+        //openConfig(OrderID);
+        //detectFormType();
+        //looper();
     }
     public static void looper(){
         System.out.println(1);
@@ -119,6 +122,41 @@ public class FCVendorTest {
             System.exit(0);
         }
         OrderID = "W" + ID;
+    }
+    public static void CheckDatabase(){
+        try {
+            File file = new File("Database.txt");
+            FileReader fileReader = null;
+            fileReader = new FileReader(file);
+            BufferedReader Buffreader = new BufferedReader(fileReader);
+            String strline;
+            while((strline=Buffreader.readLine())!=null){
+                StringTokenizer token = new StringTokenizer(strline,";");
+                while(token.hasMoreTokens())
+                {
+                    String OrderID2 = token.nextToken();
+                    if(OrderID2.equals(ID))
+                    {
+                        OrderID = "W" + OrderID2;
+                        Weight = token.nextToken();
+                        BagSize = token.nextToken();
+
+                    }else {
+                        token.nextToken();
+                        token.nextToken();
+                    };
+                    System.out.println(OrderID);
+                    System.out.println(Weight);
+                    System.out.println(BagSize);
+
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     public static void Login(){
         browser.get("http://vendor.firstcry.com/");
