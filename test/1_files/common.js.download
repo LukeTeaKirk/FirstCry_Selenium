@@ -1,0 +1,56 @@
+﻿function trimString(str)
+{ str = this != window ? this : str; return str.replace(/^\s+/g, '').replace(/\s+$/g, ''); }
+
+function IsValidDate(strDate) {
+	var year, month, day, strSep, i; for (i = 0; i < strDate.length; i++) {
+		if (strDate.charAt(i) == "/" || strDate.charAt(i) == "-") {
+			strSep = strDate.charAt(i)
+			break;
+		} 
+	}
+	day = strDate.split(strSep)[0]; month = strDate.split(strSep)[1]; year = strDate.split(strSep)[2]; var months = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31); if (year % 4 == 0)
+	{ months[1] = 29; }
+	if (isNaN(day) || isNaN(month) || isNaN(year))
+	{ return false; }
+	if (day.length == 2 || day.length == 1)
+	{ }
+	else
+	{ return false; }
+	if (month.length == 2 || month.length == 1)
+	{ }
+	else
+	{ return false; }
+	if (year.length == 4) {
+		if (((+year) >= 1900) && ((+year) <= 2080))
+		{ }
+		else
+		{ return false; } 
+	}
+	else
+	{ return false; }
+	if (month > 12 || month < 1)
+	{ return false; }
+	if (day < 1 || day > months[month - 1])
+	{ return false; }
+	for (var i = 1; i <= strDate.length; i++) {
+		if (!((i == 3) || (i == 6))) {
+			num = strDate.substring(i, i - 1)
+			if (isNaN(num) == true)
+			{ return false; } 
+		}
+		if (((i == 3) || (i == 6))) {
+			if (strDate.substring(i, i - 1) != strSep)
+			{ return false; } 
+		} 
+	}
+	if ((strDate.charAt(8) == "/") || (strDate.charAt(10) == "/"))
+	{ return false; }
+	if ((strDate.charAt(2) == "/") && (strDate.charAt(5) == "/"))
+	{ }
+	else {
+		if ((strDate.charAt(2) == "-") || (strDate.charAt(5) == "-"))
+		{ }
+		else { return false; } 
+	}
+	return true;
+}

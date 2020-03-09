@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0091)http://vendor.firstcry.com/OrderWorkFlow/ShippingInvoiceGST.aspx?sid=SW1789747WXZEDA8856111 -->
+<html xmlns="http://www.w3.org/1999/xhtml" moznomarginboxes="" mozdisallowselectionprint=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="ROBOTS" content="noindex, nofollow"><title>
+	Shipping Invoice
+</title>
+    <style type="text/css">
+        .itemTbl
+        {
+            border-top: solid 1px gray;
+            border-left: solid 1px gray;
+        }
+        .itemTblCellHead
+        {
+            background-color: Silver;
+            border-bottom: solid 1px gray;
+            border-right: solid 1px gray;
+        }
+        .itemTblCell
+        {
+            border-bottom: solid 1px gray;
+            border-right: solid 1px gray;
+        }
+        .itemTblCellHeadRight
+        {
+            text-align: right;
+            background-color: Silver;
+            border-bottom: solid 1px gray;
+            border-right: solid 1px gray;
+        }
+        .itemTblCellRight
+        {
+            text-align: right;
+            border-bottom: solid 1px gray;
+            border-right: solid 1px gray;
+        }
+        .itemTblCellBig
+        {
+            font-size: x-large;
+            font-weight: bold;
+            border-right: solid 1px gray;
+        }
+    </style>
+
+    <style type="text/css" media="print">
+        @page
+        {
+           margin:0px auto;
+        }
+        body
+        {
+            margin: 0px;
+        }
+        #divInvoice
+        {
+            margin:25px auto !important;
+        }
+        #divInvoiceAddrStkr
+        {
+            margin:25px auto !important;
+        }
+    </style>
+
+    <script src="./Shipping Invoice_files/jquery-1.3.2.min.js.download" type="text/javascript"></script>
+    <script src="./Shipping Invoice_files/jquery-barcode-last1.min.js.download" type="text/javascript"></script>
+
+    
+    <script language="javascript" type="text/javascript">
+        function fnShowAsGiftInvoice() {
+            $(".tblColHeading").hide();
+            $(".tblColCell").hide();
+            $("#spanGift").html("<b>GIFT PACK</b>");
+        }
+
+        function ConfirmEwayBill(shippingid, isb2b) {
+            var RtnFlag = confirm("EWay bill is required for this shipment. Do you want to apply ?");
+            if (RtnFlag == true) {
+                cleardata();
+                var url = getPath() + 'DSShipmentEWayBillNoGeneration.aspx?sid=' + shippingid + '&IsB2B=' + isb2b;
+                //window.open(url, '_self');
+                window.open(url, '_blank');
+            }
+            else {
+                cleardata();
+            }
+        }
+
+        function getPath() {
+            var path = window.location.href;
+            return path.substring(0, path.lastIndexOf("/")) + "/";
+        }
+
+        function cleardata() {
+            document.getElementById('divInvoice').innerHTML = "<center><b><span style='color: red; font-size: 25px;'>eWay Bill Required.</span></b></center>";
+            document.getElementById('divInvoiceAddrStkr').innerHTML = "";
+        }
+        function fnAddrStkrShowAsGiftPack() {
+            document.getElementById("tdAddrStkrShipmentValue").innerHTML = "Gift Pack";
+            document.getElementById("tdAddrStkrTotalPayment").innerHTML = "";
+        }
+    </script>
+
+</head>
+<body style="font-family: Arial; font-size: 12px;" onload="PrintDetails();">
+    <form method="post" action="http://vendor.firstcry.com/OrderWorkFlow/ShippingInvoiceGST.aspx?sid=SW1789747WXZEDA8856111" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJMjI2MjExNzkzD2QWAgIBD2QWBAIBD2QWIAIBDw8WAh4EVGV4dAUOTWFuaXNoYSAgVmVybWFkZAIDDw8WAh8ABXFwbG90IG5vIDEwLDxiciAvPlJveWFsIEJoYXRpeWEgVG93biBOZWFyIEd1bGFiIE5hZ2FyIE1vcGthLDxiciAvPkJpbGFzcHVyLDxiciAvPkNoaGF0dGlzZ2FyaCw8YnIgLz5JbmRpYSAtIDQ5NTAwNmRkAgUPZBYCAgEPDxYCHwAFDjA2Q1YwMDAxNzEzMzUzZGQCBw8PFgIfAAUOKzkxLTk5NzcyNzA4ODhkZAIJDw8WAh8ABRExNzg5NzQ3V1haRURBODg1NmRkAgsPDxYCHwAFFFcxNzg5NzQ3V1haRURBODg1NjExZGQCDQ8PFgIfAAUTMDgtMDMtMjAyMCAwODozODozNmRkAg8PDxYCHwAFCjA5LTAzLTIwMjBkZAIRDw8WAh8ABQExZGQCEw8PFgIfAAUMMTExMjA0MzcxNjEyZGQCFw8WAh4JaW5uZXJodG1sBQwxMTEyMDQzNzE2MTJkAhkPZBYGAgEPDxYCHwAFLjU4NS8yLFBBTEFNIFJPQUQsQklKV0FTQSwgTkVXIERFTEhJLEJJSkFXQVNBTi5kZAIHDw8WAh8ABRVCSUpBV0FTQU4tIDExMDA2MSAgICBkZAIJDw8WAh8ABQxEZWxoaSwgSW5kaWFkZAIbDw8WAh8ABRNHU1QgMDdBQURDRDgxMzZFMVpUZGQCHQ8PFgIfAAUIYmlsYXNwdXJkZAIfDxYCHwEFxA48dGFibGUgY2xhc3M9J2l0ZW1UYmwnIGJvcmRlcj0nMCcgY2VsbHBhZGRpbmc9JzMnIGNlbGxzcGFjaW5nPScwJyB3aWR0aD0nNzkwcHgnPjx0cj48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsSGVhZCc+PGI+SXRlbSBDb2RlPC9iPjwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbEhlYWQnPjxiPlN0eWxlIENvZGU8L2I+PC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsSGVhZCc+PGI+SXRlbSBOYW1lPC9iPjwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbEhlYWQnPjxiPkl0ZW0gRGVzY3JpcHRpb248L2I+PC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsSGVhZFJpZ2h0Jz48Yj5RdHk8L2I+PC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsSGVhZCc+PGI+SFNOQ29kZTwvYj48L3RkPjx0ZCBjbGFzcz0naXRlbVRibENlbGxIZWFkUmlnaHQgdGJsQ29sSGVhZGluZyc+PGI+TVJQPC9iPjwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbEhlYWRSaWdodCB0YmxDb2xIZWFkaW5nJz48Yj5Ub3RhbCBEaXNjb3VudDwvYj48L3RkPjx0ZCBjbGFzcz0naXRlbVRibENlbGxIZWFkUmlnaHQgdGJsQ29sSGVhZGluZyc+PGI+SUdTVCBSYXRlPC9iPjwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbEhlYWRSaWdodCB0YmxDb2xIZWFkaW5nJz48Yj5JR1NUIEFtb3VudDwvYj48L3RkPjx0ZCBjbGFzcz0naXRlbVRibENlbGxIZWFkUmlnaHQgdGJsQ29sSGVhZGluZyc+PGI+U3ViIFRvdGFsPGJyIC8+KEluY2x1ZGluZyBUYXgpPC9iPjwvdGQ+PC90cj48dHI+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbCc+MTM1NDg1MTwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbCc+OTc4OTMzMjQyNjExNTwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbCc+U2hhYmQgR3lhbiAtIEhpbmRpPC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsJz4yIHRvIDEyIFllYXJzLCA0MCBQYWdlcywgU2hhYmQgR3lhbiBmb3Iga2lkczwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbFJpZ2h0Jz4xPC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsJz40OTAzPC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsUmlnaHQgdGJsQ29sQ2VsbCc+NzAuMDA8L3RkPjx0ZCBjbGFzcz0naXRlbVRibENlbGxSaWdodCB0YmxDb2xDZWxsJz4yLjI2PC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsUmlnaHQgdGJsQ29sQ2VsbCc+MC4wMCAlPC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsUmlnaHQgdGJsQ29sQ2VsbCc+MC4wMDwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbFJpZ2h0IHRibENvbENlbGwnPjY3Ljc0PC90ZD48L3RyPjx0cj48dGQgY29sc3Bhbj0nMTAnIGNsYXNzPSdpdGVtVGJsQ2VsbCB0YmxDb2xDZWxsJyBhbGlnbj0ncmlnaHQnPlRvdGFsIElHU1QgQW1vdW50OjwvdGQ+PHRkIGNsYXNzPSdpdGVtVGJsQ2VsbFJpZ2h0IHRibENvbENlbGwnPjAuMDA8L3RkPjwvdHI+PHRyPjx0ZCBjb2xzcGFuPScxMCcgY2xhc3M9J2l0ZW1UYmxDZWxsIHRibENvbENlbGwnIGFsaWduPSdyaWdodCc+U2hpcHBpbmcgQ2hhcmdlczo8L3RkPjx0ZCBjbGFzcz0naXRlbVRibENlbGxSaWdodCB0YmxDb2xDZWxsJz4wLjAwPC90ZD48L3RyPjx0cj48dGQgY29sc3Bhbj0nMTAnIGNsYXNzPSdpdGVtVGJsQ2VsbCB0YmxDb2xDZWxsJyBhbGlnbj0ncmlnaHQnPlRvdGFsIEFtb3VudCAoSW5jbHVkaW5nIFRheCk6PC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsUmlnaHQgdGJsQ29sQ2VsbCc+NjcuNzQ8L3RkPjwvdHI+PHRyPjx0ZCBjb2xzcGFuPScxMCcgY2xhc3M9J2l0ZW1UYmxDZWxsIHRibENvbENlbGwnIGFsaWduPSdyaWdodCc+R3JhbmQgVG90YWw6PC90ZD48dGQgY2xhc3M9J2l0ZW1UYmxDZWxsUmlnaHQgdGJsQ29sQ2VsbCc+NjcuNzQ8L3RkPjwvdHI+PC90YWJsZT5kAiEPDxYCHwAFBTA2MEc4ZGQCAw9kFhoCAQ8PFgIfAAUOTWFuaXNoYSAgVmVybWFkZAIDDw8WAh8ABXFwbG90IG5vIDEwLDxiciAvPlJveWFsIEJoYXRpeWEgVG93biBOZWFyIEd1bGFiIE5hZ2FyIE1vcGthLDxiciAvPkJpbGFzcHVyLDxiciAvPkNoaGF0dGlzZ2FyaCw8YnIgLz5JbmRpYSAtIDQ5NTAwNmRkAgUPDxYCHwAFDis5MS05OTc3MjcwODg4ZGQCCQ8PFgIfAAUUVzE3ODk3NDdXWFpFREE4ODU2MTFkZAILDw8WAh8ABQwxMTEyMDQzNzE2MTJkZAINDw8WAh8ABQpYcHJlc3NiZWVzZGQCDw8PFgIfAAUWQy9TLTQxLzFDLzAwNiBiaWxhc3B1cmRkAhEPFgIfAQUOQW1vdW50IFByZXBhaWRkAhMPFgIfAQUVU2hpcG1lbnQgVmFsdWU6IDY3Ljc0ZAIVDxYCHwEFGFRvdGFsIFF1YW50aXR5IEluc2lkZTogMWQCFw8WAh8BBRRUb3RhbCBQYXltZW50OiA2Ny43NGQCHQ8WAh8BBQwxMTEyMDQzNzE2MTJkAh8PDxYCHwAFBTA2MEc4ZGRkDRW4qyBBUYPRRw/WBe5eMnsTi4uLyo/dHunzjQDzUTA=">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="93235E4D">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAKOwxGkZURbLRzKD5dBVt7xzfg78Z8BXhXifTCAVkevd39ia5IvkEcCyB2HswdphRTj8T4M3P/VjWrw96tLEGN7">
+</div>
+    <div id="divInvoice">
+        <table border="0" cellpadding="3" cellspacing="" width="800px">
+            <tbody><tr>
+                <td colspan="8" valign="top" align="center" id="spanGift">
+                    <b>TAX INVOICE</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" valign="top" width="355">
+                    To,<br>
+                    <span id="lblBillName">Manisha  Verma</span>
+                    <br>
+                    <span id="lblBillingAddress">plot no 10,<br>Royal Bhatiya Town Near Gulab Nagar Mopka,<br>Bilaspur,<br>Chhattisgarh,<br>India - 495006</span>
+                    <br>
+                    <br>
+                    <span id="spanInvNo"><b>Invoice No.:
+                        <span id="lblInvoiceNo">06CV0001713353</span></b></span>
+                    <br>
+                    Mobile No.:
+                    <span id="lblBillMobileNo">+91-9977270888</span>
+                    <br>
+                    Order No.:
+                    <span id="lblOrderNo">1789747WXZEDA8856</span>
+                    <br>
+                    Process ID:
+                    <span id="lblProcessID">W1789747WXZEDA885611</span>
+                    <br>
+                    Order Date:
+                    <span id="lblOrderDate">08-03-2020 08:38:36</span>
+                    <br>
+                    Invoice Date:
+                    <span id="lblInvoiceDate">09-03-2020</span>
+                    <br>
+                    Total No. of Items:
+                    <span id="lblNoOfItems">1</span>
+                    <br>
+                    Shipment ID:
+                    <span id="lblShipmentID">111204371612</span>
+                </td>
+                <td colspan="4" valign="top" align="right">
+                    <img src="./Shipping Invoice_files/fclogo.jpg" id="imgLogo">
+                    
+                    <div id="BarcodeImg" style="padding: 0px; overflow: auto; width: 201px;"><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 10px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 10px"></div><div style="clear:both; width: 100%; background-color: #FFFFFF; color: #000000; text-align: center; font-size: 13px; margin-top: 5px;">111204371612</div></div>
+
+                    <script type="text/javascript">
+                        $("#BarcodeImg").barcode(document.getElementById("BarcodeImg").innerHTML, "code39");
+                    </script>
+
+                    <br>
+                    Digital Age Retail Pvt. Ltd.
+                    <br>
+                    <div id="divWareHouseAdd2">
+                        <span id="lblWareHouseAddress1">585/2,PALAM ROAD,BIJWASA, NEW DELHI,BIJAWASAN.</span>
+                        <span id="lblWareHouseAddress11"></span>
+                        <span id="lblWareHouseAddress12"></span>
+                        <br>
+                        <span id="lblWareHouseAddress2">BIJAWASAN- 110061    </span>
+                        <br>
+                        <span id="lblWareHouseAddress3">Delhi, India</span>
+                    </div>
+                    <br>
+                    <span id="lblCSTTIN" style="font-weight:bold;">GST 07AADCD8136E1ZT</span>
+                    <br><br>
+                    
+                    <span id="lblAreaCode" style="font-size:13px;font-weight:bold;">bilaspur</span>
+                    <br>
+                    Customer Care: +91-20-46608100 or +91-20-67297800
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                </td>
+            </tr>
+            <tr>
+                <td id="tdItems" colspan="8" align="left"><table class="itemTbl" border="0" cellpadding="3" cellspacing="0" width="790px"><tbody><tr><td class="itemTblCellHead"><b>Item Code</b></td><td class="itemTblCellHead"><b>Style Code</b></td><td class="itemTblCellHead"><b>Item Name</b></td><td class="itemTblCellHead"><b>Item Description</b></td><td class="itemTblCellHeadRight"><b>Qty</b></td><td class="itemTblCellHead"><b>HSNCode</b></td><td class="itemTblCellHeadRight tblColHeading"><b>MRP</b></td><td class="itemTblCellHeadRight tblColHeading"><b>Total Discount</b></td><td class="itemTblCellHeadRight tblColHeading"><b>IGST Rate</b></td><td class="itemTblCellHeadRight tblColHeading"><b>IGST Amount</b></td><td class="itemTblCellHeadRight tblColHeading"><b>Sub Total<br>(Including Tax)</b></td></tr><tr><td class="itemTblCell">1354851</td><td class="itemTblCell">9789332426115</td><td class="itemTblCell">Shabd Gyan - Hindi</td><td class="itemTblCell">2 to 12 Years, 40 Pages, Shabd Gyan for kids</td><td class="itemTblCellRight">1</td><td class="itemTblCell">4903</td><td class="itemTblCellRight tblColCell">70.00</td><td class="itemTblCellRight tblColCell">2.26</td><td class="itemTblCellRight tblColCell">0.00 %</td><td class="itemTblCellRight tblColCell">0.00</td><td class="itemTblCellRight tblColCell">67.74</td></tr><tr><td colspan="10" class="itemTblCell tblColCell" align="right">Total IGST Amount:</td><td class="itemTblCellRight tblColCell">0.00</td></tr><tr><td colspan="10" class="itemTblCell tblColCell" align="right">Shipping Charges:</td><td class="itemTblCellRight tblColCell">0.00</td></tr><tr><td colspan="10" class="itemTblCell tblColCell" align="right">Total Amount (Including Tax):</td><td class="itemTblCellRight tblColCell">67.74</td></tr><tr><td colspan="10" class="itemTblCell tblColCell" align="right">Grand Total:</td><td class="itemTblCellRight tblColCell">67.74</td></tr></tbody></table></td>
+
+            </tr>
+            <tr>
+                <td colspan="8">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <b style="float:right; padding-right:10px;">Not for Resale</b>
+                </td>
+                <td>
+                    <b><span id="lblPrintSrNoKey" style="font-size:large; float:right; padding-right:5px;">060G8</span> </b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left">
+                    This is a computer generated invoice and requires no signature &amp; Stamp
+                    <br><br><b><span id="spnPlasticBanNote"></span> </b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" style="padding: 10px; font-size: 11px;">
+                    <br>
+                    <br>
+                    <div id="divTIN2">
+                        
+                        <br>
+                        
+                        
+                    </div>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left">
+                    <b>Registered Office</b>:- Rajashree Business Park, 3rd Floor,Survey No.338, Next to Sohrabh hall, Tadiwala Road,Pune 411001
+                    <br>
+                    <b>CIN</b>:- U52100PN2011PTC139221
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" style="padding: 10px; font-size: 10px;">
+                    <span id="lblError"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" align="left" style="padding: 10px; font-size: 10px;">
+                    <a id="Button1" title="Hide Invoice No." href="javascript:__doPostBack(&#39;Button1&#39;,&#39;&#39;)" style="display:inline-block;color:White;border-color:White;border-style:None;height:16px;width:16px;">&nbsp;</a>
+                </td>
+            </tr>
+        </tbody></table>
+    </div>
+    <span onclick="javascript:fnShowAsGiftInvoice();" style="cursor: pointer;" title="View As Gift Pack">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <div id="divInvoiceAddrStkr" style="page-break-before: always;">
+        <table class="itemTbl" border="0" cellpadding="3" cellspacing="" width="450px">
+            <tbody><tr>
+                <td valign="top" class="itemTblCell" style="width: 250px;">
+                    <b>To,</b><br>
+                    <span id="lblAddrStkrShipName" style="font-weight:bold;">Manisha  Verma</span>
+                    <br>
+                    <span id="lblAddrStkrShipingAddress" style="font-weight:bold;">plot no 10,<br>Royal Bhatiya Town Near Gulab Nagar Mopka,<br>Bilaspur,<br>Chhattisgarh,<br>India - 495006</span>
+                    <br>
+                    <br>
+                    <b>Mobile No.:</b>
+                    <span id="lblAddrStkrShipMobileNo" style="font-weight:bold;">+91-9977270888</span>
+                    <br>
+                </td>
+                <td valign="top" class="itemTblCell">
+                    <img src="./Shipping Invoice_files/fclogo.jpg" id="imgAddrStkrLogo">
+                    <br>
+                    <b>Process ID:</b>
+                    <span id="lblAddrStkrOrderNo" style="font-weight:bold;">W1789747WXZEDA885611</span>
+                    <br>
+                    <b>Shipment ID:</b>
+                    <span id="lblAddrStkrShipmentID" style="font-weight:bold;">111204371612</span>
+                    <br>
+                    <span id="lblAddrStkrCourierCompany" style="font-weight:bold;">Xpressbees</span>
+                    <br>                    
+                    <span id="lblAddrStkrCourierAreaCode" style="font-weight:bold;">C/S-41/1C/006 bilaspur</span>
+                </td>
+            </tr>
+            <tr>
+                <td id="tdAddrStkrPaymentMode" align="center" class="itemTblCellBig" colspan="2">Amount Prepaid</td>
+
+            </tr>
+            <tr>
+                <td id="tdAddrStkrShipmentValue" align="center" class="itemTblCellBig" colspan="2">Shipment Value: 67.74</td>
+
+            </tr>
+            <tr>
+                <td id="tdAddrStkrTotalItems" align="center" class="itemTblCellBig" colspan="2">Total Quantity Inside: 1</td>
+
+            </tr>
+            <tr>
+                <td id="tdAddrStkrTotalPayment" align="center" class="itemTblCellBig" colspan="2">Total Payment: 67.74</td>
+
+            </tr>
+            <tr>
+                <td class="itemTblCell" style="border-top: solid 1px gray;" colspan="2">
+                    <table cellspacing="0" cellspadding="0" width="100%">
+                        <tbody><tr>
+                            <td "width:="" 45%"="">
+				
+                                Digital Age Retail Pvt. Ltd.
+                                <br>
+                                
+                                
+                                <br>
+                                Customer Care: +91-20-46608100 <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                or +91-20-67297800
+				
+                            </td>
+                            <td width="55%">
+
+                                <div id="AddrStkrBarcodeImg" style="padding: 0px; overflow: auto; width: 201px;"><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 10px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 2px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 2px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 1px"></div><div style="float: left; font-size: 0px; width:0; border-left: 1px solid #000000; height: 50px;"></div><div style="float: left; font-size: 0px; background-color: #FFFFFF; height: 50px; width: 10px"></div><div style="clear:both; width: 100%; background-color: #FFFFFF; color: #000000; text-align: center; font-size: 13px; margin-top: 5px;">111204371612</div></div>
+
+                                <script type="text/javascript">
+                                    $("#AddrStkrBarcodeImg").barcode(document.getElementById("AddrStkrBarcodeImg").innerHTML, "code39");
+                                </script>
+
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" class="itemTblCell" style="border-right: solid 0px gray;">
+                    <b style="float:right; padding-right:10px;">Not for Resale</b>
+                </td>
+                <td class="itemTblCell">
+                    <b><span id="lblAddrStkrPrintSrNoKey" style="font-size:large; float:right; padding-right:5px;">060G8</span></b>
+                </td>
+            </tr>
+            
+        </tbody></table>
+    </div>
+    <span onclick="javascript:fnAddrStkrShowAsGiftPack();" style="cursor: pointer;" title="View As Gift Pack">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </form>
+    
+
+
+<script type="text/javascript">
+    function PrintDetails() {
+
+        var isAutoClose = getParamValuesByName('cl');
+        if (isAutoClose === '1') {
+
+            //alert('Done');
+            var contents = $("#divInvoice").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute", "top": "-1000000px" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html moznomarginboxes mozdisallowselectionprint><head><title>TAX INVOICE</title>');
+            frameDoc.document.write('<style type="text/css" media="print">' + 'table th, table td {' + 'border:0px solid #000;' + 'padding;0.5em;' + '}' + '</style>');
+            frameDoc.document.write('<style type="text/css" media="print">.itemTbl { border-top: solid 1px gray; border-left: solid 1px gray; }.itemTblCellHead { background-color: Silver; border-bottom: solid 1px gray; border-right: solid 1px gray; }.itemTblCell { border-bottom: solid 1px gray; border-right: solid 1px gray; }.itemTblCellHeadRight { text-align: right; background-color: Silver; border-bottom: solid 1px gray; border-right: solid 1px gray; }.itemTblCellRight { text-align: right; border-bottom: solid 1px gray; border-right: solid 1px gray; }' + '</style>');
+            frameDoc.document.write('<style type="text/css" media="print">@page {size: A4; margin:0px auto;} html {background: #fff;} body {margin:0px auto;} #imgLogo img { display:none; } #imgLogo:after {content:url(http://cdn.fcglcdn.com/brainbees/images/n/fc_logo.jpg);}.face {height: 100%;width: 100%;position: relative;}.face-back {background: #f6f6f6;}.face-front {background: #fff;}.face-front img {position: absolute;top: 0;left: 0; bottom: 0;right: 0;width: 100%;height: 100%;} </style>');
+            frameDoc.document.write('</head><body style="font-family: times;font-size: small;">');
+            //Append the DIV contents.
+            frameDoc.document.write('<div style="margin:25px auto !important;">');
+            frameDoc.document.write(contents);
+            //frameDoc.document.write('<script type="text/javascript" src="../js/jquery-1.7.11.min.js" />');
+            //frameDoc.document.write('<script type="text/javascript" src="../js/jquery-barcode-last1.min.js" />');
+            frameDoc.document.write('</div></body></html>');
+            frameDoc.document.close();
+            window.frames["frame1"].print();
+
+            window.setTimeout('closemyself()', 200);
+            //alert(+isAutoClose);
+            //        if (isAutoClose === '1') {
+            //            window.setTimeout('closemyself()', 200);
+            //        }
+        }
+    }
+
+    function closemyself() {
+        window.opener = self;
+        window.close();
+        //self.close();
+    }
+
+    function getParamValuesByName(querystring) {
+        var qstring = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < qstring.length; i++) {
+            var urlparam = qstring[i].split('=');
+            if (urlparam[0] == querystring) {
+                return urlparam[1];
+            }
+        }
+    }
+    
+</script>
+
+
+</body></html>
