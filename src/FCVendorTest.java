@@ -161,9 +161,9 @@ public class FCVendorTest {
     public static void Login(){
         browser.get("http://vendor.firstcry.com/");
         WebElement username=browser.findElement(By.xpath("//input[@name='Login1$UserName']"));
-        username.sendKeys("guptam1969@gmail.com");
+        username.sendKeys("**************");
         WebElement password=browser.findElement(By.xpath("//input[@name='Login1$Password']"));
-        password.sendKeys("Rpb@110084");
+        password.sendKeys("********");
     }
     public static void intermed(String url, WebDriver browser) {
         waitForUrl(url, browser);
