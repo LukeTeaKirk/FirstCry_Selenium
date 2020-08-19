@@ -11,16 +11,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/Desktop/selenium-java-3.141.59/libs" />
+          <root url="file://$USER_HOME$/Downloads/selenium-java-3.141.59" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$USER_HOME$/Desktop/selenium-java-3.141.59/libs" />
+          <root url="file://$USER_HOME$/Downloads/selenium-java-3.141.59" />
         </SOURCES>
-        <jarDirectory url="file://$USER_HOME$/Desktop/selenium-java-3.141.59/libs" recursive="false" />
-        <jarDirectory url="file://$USER_HOME$/Desktop/selenium-java-3.141.59/libs" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$USER_HOME$/Downloads/selenium-java-3.141.59" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/Downloads/selenium-java-3.141.59" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="org.seleniumhq.selenium:lift:3.141.59" level="project" />
   </component>
 </module>
