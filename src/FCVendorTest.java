@@ -5,12 +5,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.w3c.dom.Element;
 import javax.sql.rowset.BaseRowSet;
 import java.awt.*;
@@ -18,8 +16,10 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.sql.Date;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import static org.openqa.selenium.remote.ErrorCodes.TIMEOUT;
 
@@ -33,10 +33,10 @@ public class FCVendorTest {
     public static String BagSize;
     public static void main(String[] args){
         //InputCache();
-        Input();
-        CheckDatabase();
-        //SetBrowserDriver();
-        //Login();
+        //Input();
+        //CheckDatabase();
+        SetBrowserDriver();
+        Login();
         //CookieSave();
         //CookieLoad();
         //Login();
@@ -108,7 +108,7 @@ public class FCVendorTest {
         }
     }
     public static void SetBrowserDriver(){
-        System.setProperty("webdriver.chrome.driver","chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-print-preview");
         browser = new ChromeDriver(options);
@@ -159,11 +159,11 @@ public class FCVendorTest {
 
     }
     public static void Login(){
-        browser.get("http://vendor.firstcry.com/");
+        browser.get("https://in-vcom.brainbees.com/");
         WebElement username=browser.findElement(By.xpath("//input[@name='Login1$UserName']"));
-        username.sendKeys("**************");
+        username.sendKeys("guptam1969@gmail.com");
         WebElement password=browser.findElement(By.xpath("//input[@name='Login1$Password']"));
-        password.sendKeys("********");
+        password.sendKeys("Chhavi@2001");
     }
     public static void intermed(String url, WebDriver browser) {
         waitForUrl(url, browser);
@@ -171,7 +171,16 @@ public class FCVendorTest {
         waitForUrl("http://vendor.firstcry.com/orderworkflow/orderlistv1.aspx", browser);
     }
     public static void waitForUrl(String url, WebDriver browser){
-        new WebDriverWait(browser, 20).until(ExpectedConditions.urlToBe(url));
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(browser)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class);
+
+        wait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(By.id(url));
+            }
+        });
     }
     public static void openConfig(String OrderID){
         System.out.println(3);
@@ -295,8 +304,19 @@ public class FCVendorTest {
         ReturnDefault();
     }
     public static void waitForElement(String id){
-        WebDriverWait wait = new WebDriverWait(browser, 20);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(browser)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class);
+
+        wait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(By.id(id));
+            }
+        });
+    }
+    public void waitForLoad(WebDriver driver) {
+
     }
     public static void VerifyResults(){
 
