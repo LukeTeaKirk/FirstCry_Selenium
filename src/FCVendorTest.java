@@ -1,5 +1,5 @@
 
-//import net.bytebuddy.description.type.TypeDescription;
+import net.bytebuddy.description.type.TypeDescription;
 import org.junit.jupiter.api.Order;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
@@ -15,9 +15,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.lang.reflect.Array;
+import java.net.HttpCookie;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -36,11 +40,12 @@ public class FCVendorTest {
         //Input();
         //CheckDatabase();
         SetBrowserDriver();
-        Login();
-        //CookieSave();
-        //CookieLoad();
         //Login();
-        //intermed("http://vendor.firstcry.com/dashboard.aspx", browser);
+        //CookieSave();
+        //Login();
+        intermed("https://in-vcom.brainbees.com/#/dashboard/dashboardhome", browser);
+        CookieLoad();
+        intermed("https://in-vcom.brainbees.com/#/dashboard/dashboardhome", browser);
         //openConfig(OrderID);
         //detectFormType();
         //looper();
@@ -108,7 +113,7 @@ public class FCVendorTest {
         }
     }
     public static void SetBrowserDriver(){
-        System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-print-preview");
         browser = new ChromeDriver(options);
@@ -160,27 +165,20 @@ public class FCVendorTest {
     }
     public static void Login(){
         browser.get("https://in-vcom.brainbees.com/");
-        WebElement username=browser.findElement(By.xpath("//input[@name='Login1$UserName']"));
+        WebElement username=browser.findElement(By.xpath(("//input[@type='email']")));
         username.sendKeys("guptam1969@gmail.com");
-        WebElement password=browser.findElement(By.xpath("//input[@name='Login1$Password']"));
-        password.sendKeys("Chhavi@2001");
+        WebElement password=browser.findElement(By.xpath("//input[@type='password']"));
+        password.sendKeys("Chhavi@1991");
+
     }
     public static void intermed(String url, WebDriver browser) {
-        waitForUrl(url, browser);
-        browser.get("http://vendor.firstcry.com/orderworkflow/orderlistv1.aspx");
-        waitForUrl("http://vendor.firstcry.com/orderworkflow/orderlistv1.aspx", browser);
+        browser.get(url);
+        browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //waitForUrl(url, browser);
     }
     public static void waitForUrl(String url, WebDriver browser){
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(browser)
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofSeconds(5))
-                .ignoring(NoSuchElementException.class);
-
-        wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                return driver.findElement(By.id(url));
-            }
-        });
+        WebDriverWait wait = new WebDriverWait(browser, 100);
+        wait.until(ExpectedConditions.urlContains(url));
     }
     public static void openConfig(String OrderID){
         System.out.println(3);
@@ -305,13 +303,13 @@ public class FCVendorTest {
     }
     public static void waitForElement(String id){
         Wait<WebDriver> wait = new FluentWait<WebDriver>(browser)
-                .withTimeout(Duration.ofSeconds(30))
+                .withTimeout(Duration.ofSeconds(500))
                 .pollingEvery(Duration.ofSeconds(5))
                 .ignoring(NoSuchElementException.class);
 
         wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
-                return driver.findElement(By.id(id));
+                return driver.findElement(By.className(id));
             }
         });
     }
@@ -338,7 +336,10 @@ public class FCVendorTest {
         waitForUrl("http://vendor.firstcry.com/orderworkflow/orderlistv1.aspx", browser);
     }
     public static void CookieSave(){
-        waitForUrl("http://vendor.firstcry.com/dashboard.aspx", browser);
+
+        //waitForElement("heading1 is-size-3");
+        waitForUrl("dashboardhome", browser);
+        System.out.println("Cookie start");
         File file = new File("Cookies.data");
         try
         {
@@ -367,6 +368,7 @@ public class FCVendorTest {
     }
     public static void  CookieLoad(){
         try{
+            Thread.sleep(2000);
             browser.manage().deleteAllCookies();
             File file = new File("Cookies.data");
             FileReader fileReader = new FileReader(file);
@@ -380,15 +382,19 @@ public class FCVendorTest {
                     String domain = token.nextToken();
                     String path = token.nextToken();
                     java.util.Date expiry = null;
+
                     String val;
                     if(!(val=token.nextToken()).equals("null"))
                     {
-                        expiry = new java.util.Date(val);
+                        DateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                        expiry = df.parse(val);
+
                     }
                     Boolean isSecure = new Boolean(token.nextToken()).
                             booleanValue();
                     Cookie ck = new Cookie(name,value,domain,path,expiry,isSecure);
                     System.out.println(ck);
+
                     browser.manage().addCookie(ck);
                     System.out.println("cookie added");
                 }
